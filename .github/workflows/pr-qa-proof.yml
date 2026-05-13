@@ -54,6 +54,7 @@ jobs:
         with:
           name: qa-proof-${{ github.event.pull_request.number }}
           if-no-files-found: warn
+          include-hidden-files: true
           path: |
             qa-proof-artifacts/qa-proof-report.md
             qa-proof-artifacts/sample-pr-comment.md
