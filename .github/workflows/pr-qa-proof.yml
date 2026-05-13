@@ -1,0 +1,90 @@
+name: PR QA Proof
+
+"on":
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  qa-proof:
+    name: Generate PR QA proof
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build app
+        run: npm run build
+
+      - name: Run Playwright QA proof
+        id: qa_proof
+        continue-on-error: true
+        run: npm run qa:proof
+
+      - name: Write job summary
+        if: always()
+        run: |
+          if [ -f qa-proof-artifacts/github-step-summary.md ]; then
+            cat qa-proof-artifacts/github-step-summary.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "QA proof summary was not generated." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload QA proof artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-proof-${{ github.event.pull_request.number }}
+          if-no-files-found: warn
+          path: |
+            qa-proof-artifacts/qa-proof-report.md
+            qa-proof-artifacts/sample-pr-comment.md
+            qa-proof-artifacts/github-step-summary.md
+            qa-proof-artifacts/check-results.json
+            qa-proof-artifacts/screenshots/
+            qa-proof-artifacts/test-results/
+            qa-proof-artifacts/playwright-report/
+
+      - name: Upsert PR comment
+        if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs');
+            const marker = '<!-- qa-proof-demo:summary -->';
+            const commentPath = 'qa-proof-artifacts/sample-pr-comment.md';
+            const fallbackBody = `${marker}\n## PR QA Proof Summary\n\nQA proof comment body was not generated. Check the workflow logs and artifacts.`;
+            const body = fs.existsSync(commentPath) ? fs.readFileSync(commentPath, 'utf8') : fallbackBody;
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const comments = await github.rest.issues.listComments({ owner, repo, issue_number, per_page: 100 });
+            const previous = comments.data.find((comment) => comment.body && comment.body.includes(marker));
+
+            if (previous) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+      - name: Fail workflow when QA proof failed
+        if: steps.qa_proof.outcome == 'failure'
+        run: exit 1

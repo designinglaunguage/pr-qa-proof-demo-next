@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PR QA proof 데모</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="PR QA proof 홈">
+          <strong>PR QA Proof</strong>
+          <span>GitHub 댓글형 화면 확인 자동화</span>
+        </a>
+        <nav class="nav" aria-label="주요 화면">
+          <a href="/" aria-current="page">홈</a>
+          <a href="/pricing.html">가격/비교</a>
+          <a href="/settings.html">설정</a>
+        </nav>
+      </header>
+
+      <main class="content">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Pull request QA proof demo</p>
+            <h1>PR을 올리면 화면 확인 proof가 댓글로 남습니다.</h1>
+            <p class="lead" data-testid="proof-summary">
+              핵심 화면 desktop/mobile 스크린샷, 실패 시 video/trace, 체크리스트, Markdown 리포트를
+              GitHub PR 댓글 한 곳에 모아 PM/CTO가 반복 확인하는 시간을 줄입니다.
+            </p>
+            <div class="actions" aria-label="데모 이동">
+              <a class="button" href="/pricing.html">비교 보기</a>
+              <a class="button secondary" href="/settings.html">설정 보기</a>
+            </div>
+          </div>
+
+          <aside class="proof-panel" aria-label="PR 댓글 미리보기">
+            <div class="proof-title">
+              <span>QA proof summary</span>
+              <span class="status">ready</span>
+            </div>
+            <div class="proof-body">
+              <ul>
+                <li><span class="marker">✓</span><span>홈 desktop/mobile screenshot 저장</span></li>
+                <li><span class="marker">✓</span><span>가격/비교 화면 핵심 문구 확인</span></li>
+                <li><span class="marker">✓</span><span>설정 화면 체크 항목 확인</span></li>
+                <li><span class="marker">!</span><span>실패 시 video 또는 trace artifact 첨부</span></li>
+              </ul>
+            </div>
+          </aside>
+        </section>
+
+        <section class="section">
+          <h2>PM/CTO용 요약</h2>
+          <div class="grid">
+            <article class="card">
+              <h3>PR 화면 검수 시간 절감</h3>
+              <p>매번 브랜치를 받고 핵심 화면을 직접 누르는 반복을 줄입니다.</p>
+            </article>
+            <article class="card">
+              <h3>회귀 위험 조기 노출</h3>
+              <p>홈, 가격, 설정처럼 매출/온보딩에 가까운 화면을 PR 단계에서 확인합니다.</p>
+            </article>
+            <article class="card">
+              <h3>설치 단위가 작음</h3>
+              <p>고객 repo에 Playwright 테스트, workflow, 댓글 본문 생성만 붙입니다.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "pr-qa-proof-demo-next",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Small demo app that proves GitHub PR QA proof screenshots, report, and comment artifacts.",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "start": "node scripts/server.js",
+    "qa:proof": "node scripts/run-qa-proof.js",
+    "qa:report": "node scripts/generate-qa-proof-report.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0"
+  }
+}

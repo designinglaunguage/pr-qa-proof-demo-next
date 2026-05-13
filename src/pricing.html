@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>가격/비교 - PR QA proof 데모</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="PR QA proof 홈">
+          <strong>PR QA Proof</strong>
+          <span>GitHub 댓글형 화면 확인 자동화</span>
+        </a>
+        <nav class="nav" aria-label="주요 화면">
+          <a href="/">홈</a>
+          <a href="/pricing.html" aria-current="page">가격/비교</a>
+          <a href="/settings.html">설정</a>
+        </nav>
+      </header>
+
+      <main class="content">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Pricing and compare</p>
+            <h1>가격/비교</h1>
+            <p class="lead" data-testid="proof-summary">
+              첫 판매는 SaaS가 아니라 고객 repo에 붙이는 셋업 패키지입니다. 화면 2~3개부터 시작해
+              PR마다 확인 증거를 남기는 작은 자동화로 포지셔닝합니다.
+            </p>
+          </div>
+
+          <aside class="proof-panel" aria-label="파일 단위">
+            <div class="proof-title">
+              <span>starter setup</span>
+              <span class="status">small</span>
+            </div>
+            <div class="proof-body">
+              <div class="metric">
+                <span>초기 화면</span>
+                <strong>3</strong>
+              </div>
+              <div class="metric">
+                <span>필수 의존성</span>
+                <strong>1</strong>
+              </div>
+              <div class="metric">
+                <span>PR 댓글</span>
+                <strong>1</strong>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="section">
+          <h2>수동 확인과의 차이</h2>
+          <div class="table" role="table" aria-label="비교표" data-testid="comparison-table">
+            <div class="row header" role="row">
+              <div role="columnheader">항목</div>
+              <div role="columnheader">수동 화면 확인</div>
+              <div role="columnheader">PR QA proof 셋업</div>
+            </div>
+            <div class="row" role="row">
+              <div role="cell">반복 작업</div>
+              <div role="cell"><p>PM/CTO가 브랜치마다 직접 실행하고 화면을 눌러 확인합니다.</p></div>
+              <div role="cell"><p>PR마다 정해진 화면을 자동으로 열고 스크린샷을 남깁니다.</p></div>
+            </div>
+            <div class="row" role="row">
+              <div role="cell">증거</div>
+              <div role="cell"><p>채팅 메시지나 기억에 의존하기 쉽습니다.</p></div>
+              <div role="cell"><p>Markdown 리포트, screenshot, 실패 artifact가 PR에 남습니다.</p></div>
+            </div>
+            <div class="row" role="row">
+              <div role="cell">첫 적용 범위</div>
+              <div role="cell"><p>매번 어디까지 볼지 다시 정해야 합니다.</p></div>
+              <div role="cell"><p><span class="tag">Starter</span> 홈, 가격, 설정 같은 핵심 화면부터 고정합니다.</p></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
